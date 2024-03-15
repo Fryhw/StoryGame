@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Story Game</string>
+    <string name="new_game">New game</string>
+    <string name="load_game">Load game</string>
+    <string name="achiev">achievements</string>
+    <string name="Test"></string>
+    <string name="choice1">Choix1</string>
+    <string name="choice2">Choix2</string>
+    <string name="choice3">Choix3</string>
+    <string name="choice4">Choix4</string>
+
+    <string name="Text_game">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat</string>
+
+
+    <!--
+    <string name="banner_ad_unit_id">ca-app-pub-9101681298269515~9157920622</string>
+    -->
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/63009781112</string>
+
+
+</resources>
