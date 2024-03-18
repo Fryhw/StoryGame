@@ -1,55 +1,74 @@
 package com.example.storygame;
 
-import okhttp3.*;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
+import android.os.AsyncTask;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ChatGPTAPI {
 
-    private static final String API_KEY = "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";
-    private static final String API_URL = "https://api.openai.com/v1/completions";
+    public interface ChatGPTListener {
+        void onChatGPTResponse(String response);
+    }
 
-    public static String getResponse(String prompt) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
-        JsonObject jsonInput = new JsonObject();
-        jsonInput.addProperty("model", "text-davinci-002");
-        jsonInput.addProperty("prompt", prompt);
-        jsonInput.addProperty("max_tokens", 100);
-
-        RequestBody body = RequestBody.create(
-                MediaType.parse("application/json"),
-                jsonInput.toString()
-        );
-
-        Request request = new Request.Builder()
-                .url(API_URL)
-                .addHeader("Authorization", "Bearer " + API_KEY)
-                .post(body)
-                .build();
-
-        Response response = client.newCall(request).execute();
-        String responseBody = response.body().string();
-        response.close();
-
-        JsonObject jsonResponse = new Gson().fromJson(responseBody, JsonObject.class);
-
-        // Vérifie si la réponse JSON contient un élément "choices"
-        if (jsonResponse.has("choices")) {
-            JsonArray choicesArray = jsonResponse.getAsJsonArray("choices");
-            if (choicesArray.size() > 0) {
-                JsonObject choiceObject = choicesArray.get(0).getAsJsonObject();
-                if (choiceObject.has("text")) {
-                    return choiceObject.get("text").getAsString();
-                }
+    public static void chatGPT(String prompt, ChatGPTListener listener) {
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... prompts) {
+                return performChatGPTRequest(prompts[0]);
             }
-        }
 
-        // Si la structure JSON est incorrecte ou si les données nécessaires sont manquantes
-        return "Réponse non disponible";
+            @Override
+            protected void onPostExecute(String response) {
+                listener.onChatGPTResponse(response);
+            }
+        }.execute(prompt);
+    }
+
+    public static String performChatGPTRequest(String prompt) {
+        String url = "https://api.openai.com/v1/chat/completions";
+        String apiKey = "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";
+        String model = "gpt-3.5-turbo";
+
+        try {
+            URL obj = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Authorization", "Bearer " + apiKey);
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            // The request body
+            String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
+            connection.setDoOutput(true);
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            writer.write(body);
+            writer.flush();
+            writer.close();
+
+            // Response from ChatGPT
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+            br.close();
+
+            // Extract the message from the JSON response
+            return extractMessageFromJSONResponse(response.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String extractMessageFromJSONResponse(String response) {
+        int start = response.indexOf("content") + 11;
+        int end = response.indexOf("\"", start);
+        return response.substring(start, end);
     }
 }
