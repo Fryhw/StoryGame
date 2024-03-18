@@ -26,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        String s = "Il était une fois une jeune princesse nommée Lily, qui vivait dans un royaume lointain. Un jour, un dragon maléfique attaqua le château de la princesse et captura son père, le roi. \n\nChoix 1 : La princesse décide de partir à la recherche";
+        String st = s.replaceAll("\\n\\n","*");
+
+        System.out.println(st);
+
         // Récupérer une référence vers le bouton à partir du layout
         button = findViewById(R.id.button_New);
 
