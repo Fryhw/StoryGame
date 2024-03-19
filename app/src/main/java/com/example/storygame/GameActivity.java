@@ -72,15 +72,7 @@ public class GameActivity extends AppCompatActivity {
                 String texte = response2.substring(0, choixIndex).trim();
                 last+= "suite ="+texte;
                 textView.setText(texte);
-                String temp = response2.replace(texte,"");
-                String[] choixArray = temp.split("SEP");
-                if (choixArray.length>2){
-                    b1.setText(choixArray[2]);
-                    b2.setText(choixArray[3]);
-                    b3.setText(choixArray[4]);
-                    b4.setText(choixArray[5]);
-                }
-
+                fillAll(response2,b1,b2,b3,b4);
                 gridLayout.setVisibility(View.GONE);
                 swipeView.setVisibility(View.VISIBLE);
             }
@@ -121,8 +113,8 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
+                        String response2 =response.replace("\\n","SEP");
+                        fillAll(response,b1,b2,b3,b4);
                         textView.setText(response);
 
                     }
@@ -333,5 +325,18 @@ private AdSize getAdSize() {
 
         int adWidth = (int) (adWidthPixels / density);
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
+        }
+        public static void fillAll(String response,Button b1, Button b2, Button b3, Button b4){
+            System.out.println(response);
+            int choixIndex = response.indexOf("SEPSEP");
+            String texte = response.substring(0, choixIndex).trim();
+            String temp = response.replace(texte,"");
+            String[] choixArray = temp.split("SEP");
+            if (choixArray.length>2){
+                b1.setText(choixArray[2]);
+                b2.setText(choixArray[3]);
+                b3.setText(choixArray[4]);
+                b4.setText(choixArray[5]);
+            }
         }
 }
