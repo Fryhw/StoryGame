@@ -28,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
+            app:layout_constraintTop_toBottomOf="@id/ad_view_container2"
             />
+
 
         <!-- Carré contenant le texte -->
         <LinearLayout
@@ -55,11 +57,11 @@
                     />
             </FrameLayout>
             <GridLayout
+                android:visibility="gone"
                 android:id="@+id/gridLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:visibility="visible"
                 android:layout_gravity="bottom">
 
                 <!-- Boutons pour les choix -->

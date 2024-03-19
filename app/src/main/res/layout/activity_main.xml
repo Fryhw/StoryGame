@@ -11,8 +11,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:textColor="@color/white"
-        android:background="@color/gray"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="NotSibling">
@@ -36,14 +35,15 @@
         android:orientation="vertical"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         tools:ignore="UselessParent">
+
         <TextView
             android:id="@+id/TestView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/Test"
             android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="20sp"
             />
 
@@ -52,6 +52,7 @@
             android:layout_width="240dp"
             android:layout_height="81dp"
             android:layout_marginBottom="50dp"
+            android:background="#FFE48EDB"
             android:text="@string/new_game"/>
 
         <Button
@@ -59,6 +60,7 @@
             android:layout_width="240dp"
             android:layout_height="81dp"
             android:layout_marginBottom="50dp"
+            android:background="@color/pink"
             android:text="@string/load_game"/>
 
         <Button
@@ -66,6 +68,7 @@
             android:layout_width="240dp"
             android:layout_height="81dp"
             android:layout_marginBottom="50dp"
+            android:background="@color/pink"
             android:text="@string/achiev"/>
     </LinearLayout>
 
