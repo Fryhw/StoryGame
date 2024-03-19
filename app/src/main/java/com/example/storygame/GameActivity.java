@@ -28,11 +28,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Button b1,xT;
+    private Button b1,xT, b2,b3,b4;
     private GridLayout gridLayout,cG;
     private TextView swipeView,cT;
     private int counter = 0;
     private boolean test = false;
+    private String last ="";
 
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
@@ -49,6 +50,10 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         gridLayout = findViewById(R.id.gridLayout);
+        b1 = findViewById(R.id.choice1);
+        b2 = findViewById(R.id.choice2);
+        b3 = findViewById(R.id.choice3);
+        b4 = findViewById(R.id.choice4);
         swipeView = findViewById(R.id.swipeView);
         cG = findViewById(R.id.counterGrid);
         cT = findViewById(R.id.counterText);
@@ -59,8 +64,15 @@ public class GameActivity extends AppCompatActivity {
         ChatGPTAPI.chatGPT(Rv, new ChatGPTAPI.ChatGPTListener() {
             @Override
             public void onChatGPTResponse(String response) {
+
                 TextView textView = findViewById(R.id.Text_game);
-                textView.setText(response);
+                System.out.println(response);
+                String response2 =response.replace("\\n","SEP");
+                int choixIndex = response2.indexOf("SEPSEP");
+                String texte = response2.substring(0, choixIndex).trim();
+                last+= "suite ="+texte;
+                textView.setText(texte);
+                fillAll(response2,b1,b2,b3,b4);
                 gridLayout.setVisibility(View.GONE);
                 swipeView.setVisibility(View.VISIBLE);
             }
@@ -96,7 +108,59 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
-                ChatGPTAPI.chatGPT("J'ai cette histoire : "+TextFill+ "et j'ai fait ce choix :Alors conitnue L'histoire", new ChatGPTAPI.ChatGPTListener() {
+                String t1 = b1.getText().toString();
+                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t1, new ChatGPTAPI.ChatGPTListener() {
+                    @Override
+                    public void onChatGPTResponse(String response) {
+                        TextView textView = findViewById(R.id.Text_game);
+                        String response2 =response.replace("\\n","SEP");
+                        fillAll(response,b1,b2,b3,b4);
+                        textView.setText(response);
+
+                    }
+                });
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String TextFill = findViewById(R.id.Text_game).toString();
+                String t4 = b4.getText().toString();
+                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t4, new ChatGPTAPI.ChatGPTListener() {
+                    @Override
+                    public void onChatGPTResponse(String response) {
+                        TextView textView = findViewById(R.id.Text_game);
+                        //int choixIndex = response.indexOf("\n\n");
+                        //String texte = response.substring(0, choixIndex).trim();
+                        textView.setText(response);
+
+                    }
+                });
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String TextFill = findViewById(R.id.Text_game).toString();
+                String t3 = b3.getText().toString();
+                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t3, new ChatGPTAPI.ChatGPTListener() {
+                    @Override
+                    public void onChatGPTResponse(String response) {
+                        TextView textView = findViewById(R.id.Text_game);
+                        //int choixIndex = response.indexOf("\n\n");
+                        //String texte = response.substring(0, choixIndex).trim();
+                        textView.setText(response);
+
+                    }
+                });
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String TextFill = findViewById(R.id.Text_game).toString();
+                String t2 = b2.getText().toString();
+                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t2, new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
@@ -261,5 +325,18 @@ private AdSize getAdSize() {
 
         int adWidth = (int) (adWidthPixels / density);
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
+        }
+        public static void fillAll(String response,Button b1, Button b2, Button b3, Button b4){
+            System.out.println(response);
+            int choixIndex = response.indexOf("SEPSEP");
+            String texte = response.substring(0, choixIndex).trim();
+            String temp = response.replace(texte,"");
+            String[] choixArray = temp.split("SEP");
+            if (choixArray.length>2){
+                b1.setText(choixArray[2]);
+                b2.setText(choixArray[3]);
+                b3.setText(choixArray[4]);
+                b4.setText(choixArray[5]);
+            }
         }
 }
