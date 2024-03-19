@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
             public void onChatGPTResponse(String response) {
 
                 TextView textView = findViewById(R.id.Text_game);
-                System.out.println(response);
+                System.out.println("Start reply "+ response);
                 String response2 =response.replace("\\n","SEP");
                 int choixIndex = response2.indexOf("SEPSEP");
                 String texte = response2.substring(0, choixIndex).trim();
@@ -109,7 +109,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t1 = b1.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t1, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t1+" raconte moi ce qu'il se passe, puis après propose moi 4 nouveaux choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
@@ -126,12 +126,12 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t4 = b4.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t4, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT(" Raconte moi la suite de l'hisoire : pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t4+" après propose moi 4 nouveaux choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
+                        String response2 =response.replace("\\n","SEP");
+                        fillAll(response,b1,b2,b3,b4);
                         textView.setText(response);
 
                     }
@@ -143,12 +143,12 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t3 = b3.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t3, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t3+" après propose moi 4 nouveaux choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
+                        String response2 =response.replace("\\n","SEP");
+                        fillAll(response,b1,b2,b3,b4);
                         textView.setText(response);
 
                     }
@@ -160,13 +160,13 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t2 = b2.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t2, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t2+" après propose moi 4 nouveaux choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
                         textView.setText(response);
+                        String response2 =response.replace("\\n","SEP");
+                        fillAll(response,b1,b2,b3,b4);
 
                     }
                 });
@@ -327,12 +327,12 @@ private AdSize getAdSize() {
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
         }
         public static void fillAll(String response,Button b1, Button b2, Button b3, Button b4){
-            System.out.println(response);
+            System.out.println("Fill all rreply "+response);
             int choixIndex = response.indexOf("SEPSEP");
             String texte = response.substring(0, choixIndex).trim();
             String temp = response.replace(texte,"");
             String[] choixArray = temp.split("SEP");
-            if (choixArray.length>2){
+            if (choixArray.length>4){
                 b1.setText(choixArray[2]);
                 b2.setText(choixArray[3]);
                 b3.setText(choixArray[4]);
