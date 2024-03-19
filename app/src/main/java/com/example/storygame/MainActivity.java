@@ -26,20 +26,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainActivity extends AppCompatActivity {
 
     private Button button,b1,b2;
+    private boolean test = false;
 
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
     private final AtomicBoolean isMobileAdsInitializeCalled = new AtomicBoolean(false);
     private GoogleMobileAdsConsentManager googleMobileAdsConsentManager;
     private AdView adView;
-    private FrameLayout adContainerView;
+    private FrameLayout adContainerView,adContainerView2;
     private AtomicBoolean initialLayoutComplete = new AtomicBoolean(false);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.button_New);
         button.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         adContainerView = findViewById(R.id.ad_view_container);
+        adContainerView2 = findViewById(R.id.ad_view_container2);
 
         // Log the Mobile Ads SDK version.
         Log.d(TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion());
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         MobileAds.setRequestConfiguration(
                 new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345")).build());
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_menu, menu);
@@ -173,17 +172,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadBanner() {
         // Create a new ad view.
-        adView = new AdView(this);
-        adView.setAdUnitId(AD_UNIT_ID);
-        adView.setAdSize(getAdSize());
+        AdView adView1 = new AdView(this);
+        adView1.setAdUnitId(AD_UNIT_ID);
+        adView1.setAdSize(getAdSize());
 
-        // Replace ad container with new ad view.
+        // Add the first ad view to the first container.
         adContainerView.removeAllViews();
-        adContainerView.addView(adView);
+        adContainerView.addView(adView1);
 
         // Start loading the ad in the background.
         AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        adView1.loadAd(adRequest);
+
+        // Create a new ad view for the second container.
+        AdView adView2 = new AdView(this);
+        adView2.setAdUnitId(AD_UNIT_ID); // Change the ad unit ID if necessary.
+        adView2.setAdSize(getAdSize()); // You may need to adjust the ad size.
+
+        // Add the second ad view to the second container.
+        adContainerView2.removeAllViews();
+        adContainerView2.addView(adView2);
+
+        AdRequest adRequest2 = new AdRequest.Builder().build();
+        adView2.loadAd(adRequest2);
     }
 
     private void initializeMobileAdsSdk() {
@@ -212,8 +223,15 @@ public class MainActivity extends AppCompatActivity {
         display.getMetrics(outMetrics);
 
         float density = outMetrics.density;
+        float adWidthPixels=0;
+        if (test != true){
+            adWidthPixels = adContainerView.getWidth();
+            test = true;
+        }
+        else {
+            adWidthPixels = adContainerView2.getWidth();
+        }
 
-        float adWidthPixels = adContainerView.getWidth();
 
         // If the ad hasn't been laid out, default to the full screen width.
         if (adWidthPixels == 0) {

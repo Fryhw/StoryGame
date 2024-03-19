@@ -67,6 +67,9 @@ public class Save extends AppCompatActivity {
         if (googleMobileAdsConsentManager.canRequestAds()) {
             initializeMobileAdsSdk();
         }
+
+        // Since we're loading the banner based on the adContainerView size, we need to wait until this
+        // view is laid out before we can get the width.
         adContainerView
                 .getViewTreeObserver()
                 .addOnGlobalLayoutListener(
@@ -77,6 +80,7 @@ public class Save extends AppCompatActivity {
                             }
                         });
 
+        // Set your test devices. Check your logcat output for the hashed device ID t
         MobileAds.setRequestConfiguration(
                 new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345")).build());
     }

@@ -95,4 +95,5 @@ public class Trophee extends AppCompatActivity {
         int adWidth = (int) (adWidthPixels / density);
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
     }
+
 }

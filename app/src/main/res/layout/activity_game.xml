@@ -11,20 +11,24 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:textColor="@color/white"
         android:background="@color/gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="NotSibling">
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adViewTop"
+        <FrameLayout
+            android:id="@+id/ad_view_container2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:adSize="BANNER"
-            app:adUnitId="@string/banner_ad_unit_id"
-            android:layout_alignParentTop="true"/>
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true" />
+        <FrameLayout
+            android:id="@+id/ad_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            />
 
         <!-- Carré contenant le texte -->
         <LinearLayout
@@ -36,6 +40,7 @@
                 android:id="@+id/textContainer"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
+                android:layout_weight="1"
                 >
 
                 <TextView
@@ -46,6 +51,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:layout_weight="1"
                     />
             </FrameLayout>
             <GridLayout
@@ -53,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_gravity="bottom">
 
                 <!-- Boutons pour les choix -->
@@ -95,13 +101,14 @@
 
             </GridLayout>
             <TextView
-                android:minHeight="100dp"
+                android:minHeight="300dp"
                 android:id="@+id/swipeView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:background="@color/blue"
-                android:text="Swipe à gauche pour afficher les choix" />
+                android:text="Swipe à gauche pour afficher les choix
+swipe à droit pour le point qui se clique, secoue pour un message en log d" />
 
 
             <GridLayout
@@ -136,15 +143,6 @@
                 android:layout_columnWeight="1" />
 
         </LinearLayout>
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adViewBottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:adSize="BANNER"
-            app:adUnitId="@string/banner_ad_unit_id"
-            android:layout_alignParentBottom="true"/>
-
-
     </RelativeLayout>
 
 
