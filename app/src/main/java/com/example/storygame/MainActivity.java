@@ -1,5 +1,6 @@
 package com.example.storygame;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private Button button,b1,b2;
     private boolean test = false;
 
+
+    private static Context context;
+
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
     private final AtomicBoolean isMobileAdsInitializeCalled = new AtomicBoolean(false);
@@ -39,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+        context = getApplicationContext();
+
+
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.button_New);
         button.setOnClickListener(new View.OnClickListener() {
@@ -240,5 +250,10 @@ public class MainActivity extends AppCompatActivity {
 
         int adWidth = (int) (adWidthPixels / density);
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
+    }
+
+
+    public static Context getAppContext() {
+        return context;
     }
 }

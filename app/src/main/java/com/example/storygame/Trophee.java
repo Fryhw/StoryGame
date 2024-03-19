@@ -29,6 +29,8 @@ public class Trophee extends AppCompatActivity {
         setContentView(R.layout.activity_trophee);
         adContainerView = findViewById(R.id.ad_view_container);
 
+
+
         Log.d(TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion());
 
         // Initialize the Mobile Ads SDK.
