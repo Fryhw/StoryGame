@@ -18,16 +18,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="NotSibling">
+        <FrameLayout
+            android:id="@+id/ad_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adSize="BANNER"
-        app:adUnitId="@string/banner_ad_unit_id"
-        android:layout_alignParentTop="true"/>
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -66,13 +65,12 @@
             android:text="@string/achiev"/>
     </LinearLayout>
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adViewBottom"
+        <FrameLayout
+            android:id="@+id/ad_view_container2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:adSize="BANNER"
-            app:adUnitId="@string/banner_ad_unit_id"
-            android:layout_alignParentBottom="true"/>
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 

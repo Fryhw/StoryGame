@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,7 @@
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9101681298269515~9157920622" />
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
 
         <activity
             android:name=".MainActivity"
@@ -32,6 +33,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Trophee"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Save"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

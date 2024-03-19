@@ -9,14 +9,17 @@
     <string name="choice3">Fait moi un dessin en ascii</string>
     <string name="choice4">Parle en binnaire</string>
 
-    <string name="Text_game">Raconte moi un histoire intéractive puis écrit 4 choix qui nous permettrons de continuer histoire sous forme -> texte, CHOIX ¤1¤ CHOIX ¤2¤ CHOIX ¤3¤ CHOIX ¤4¤  </string>
+    <string name="Text_game">Chargement </string>
 
     <string name="fill">Raconte moi un histoire intéractive puis écrit 4 choix qui nous permettrons de continuer histoire sous forme -> texte, CHOIX ¤1¤ CHOIX ¤2¤ CHOIX ¤3¤ CHOIX ¤4¤  </string>
     <!--
     <string name="banner_ad_unit_id">ca-app-pub-9101681298269515~9157920622</string>
-    -->
-
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/63009781112</string>
+    -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
+    <string name="hello_world">Hello world!</string>
+    <string name="more_menu" translatable="false">More</string>
+    <string name="privacy_settings" translatable="false">Privacy Settings</string>
 
 </resources>
