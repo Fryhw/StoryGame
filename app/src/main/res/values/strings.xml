@@ -10,6 +10,7 @@
     <string name="choice4">Parle en binnaire</string>
 
     <string name="Text_game">Chargement </string>
+    <string name="impossible_game">TEST</string>
 
     <string name="fill">Raconte moi un histoire intéractive puis écrit 4 choix qui nous permettrons de continuer histoire sous forme -> texte, CHOIX ¤1¤ CHOIX ¤2¤ CHOIX ¤3¤ CHOIX ¤4¤  </string>
     <!--
