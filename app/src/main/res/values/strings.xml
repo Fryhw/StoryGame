@@ -1,26 +1,17 @@
 <resources>
     <string name="app_name">Story Game</string>
     <string name="new_game">New game</string>
-    <string name="load_game">Load game</string>
-    <string name="achiev">achievements</string>
+    <string name="achievments">achievements</string>
     <string name="Test"></string>
     <string name="choice1">Choix 1 </string>
     <string name="choice2">Choix 2</string>
     <string name="choice3">Choix 3</string>
     <string name="choice4">Choix 4</string>
-    <string name="Text_game"></string>
+    <string name="Text_game">Chargement</string>
     <string name="impossible_game">TEST</string>
-    <string name="Chapitre">Chargement</string>
-
-    <string name="fill">Raconte moi un histoire intéractive puis écrit 4 choix qui nous permettrons de continuer histoire sous forme -> texte, CHOIX ¤1¤ CHOIX ¤2¤ CHOIX ¤3¤ CHOIX ¤4¤  </string>
-    <!--
-    <string name="banner_ad_unit_id">ca-app-pub-9101681298269515~9157920622</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/63009781112</string>
-    -->
+    <string name="Chapitre"></string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="more_menu" translatable="false">More</string>
     <string name="privacy_settings" translatable="false">Privacy Settings</string>
-
+    <string name="indic">Swipe vers le haut pour afficher la zone de clique</string>
 </resources>

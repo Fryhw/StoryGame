@@ -64,7 +64,7 @@ public class ChatGPTAPI {
         } catch (IOException e) {
             error++;
             e.printStackTrace();
-            if (error<5){
+            if (error<3){
                 return performChatGPTRequest(prompt);}
             else {
                 return null;

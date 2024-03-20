@@ -35,7 +35,6 @@ public class Save extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_save);
         adContainerView = findViewById(R.id.ad_view_container);
 
         // Log the Mobile Ads SDK version.

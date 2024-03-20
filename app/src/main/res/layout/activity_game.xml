@@ -5,6 +5,7 @@
     android:id="@+id/game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".GameActivity">
 
     <RelativeLayout
@@ -40,6 +41,9 @@
                     android:layout_height="wrap_content"
                     android:onClick="onBackPressed"
                     android:text="Précédent"
+                    android:layout_alignParentStart="true"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp"/>
                     android:layout_alignParentStart="true" />
 
                 <Chronometer
@@ -71,7 +75,9 @@
                 <com.example.storygame.CustomScrollView
                     android:id="@+id/myScroll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_stroke"
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/Text_game"
@@ -85,6 +91,7 @@
                         android:maxLines="10"
                         android:maxWidth="380dp"
                         android:scrollbars="vertical"
+
                         />
                 </com.example.storygame.CustomScrollView>
 
@@ -106,7 +113,9 @@
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
                     android:gravity="center"
-                    android:text="@string/choice1"/>
+                    android:text="@string/choice1"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp" />
 
                 <Button
                     android:id="@+id/choice2"
@@ -115,7 +124,9 @@
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
                     android:gravity="center"
-                    android:text="@string/choice2"/>
+                    android:text="@string/choice2"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp" />
 
                 <Button
                     android:id="@+id/choice3"
@@ -124,6 +135,8 @@
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
                     android:gravity="center"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp"
                     android:text="@string/choice3"/>
 
                 <Button
@@ -133,6 +146,8 @@
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
                     android:gravity="center"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="1dp"
                     android:text="@string/choice4"/>
 
             </GridLayout>
@@ -169,6 +184,15 @@ swipe à droit pour le point qui se clique, secoue pour un message en log d" />
                     />
 
             </GridLayout>
+            <TextView
+                android:id="@+id/indication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/indic"
+                android:layout_centerHorizontal="true"
+                android:textSize="17dp"
+                android:paddingBottom="20dp"
+                />
             <Button
                 android:visibility="gone"
                 android:id="@+id/circleButton1"
@@ -176,7 +200,8 @@ swipe à droit pour le point qui se clique, secoue pour un message en log d" />
                 android:layout_height="50dp"
                 android:background="@drawable/circle_button"
                 android:onClick="incrementCounter"
-                android:layout_columnWeight="1" />
+                android:layout_columnWeight="1"
+                android:paddingBottom="20dp"/>
             <FrameLayout
                 android:id="@+id/ad_view_container"
                 android:layout_width="match_parent"

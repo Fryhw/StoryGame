@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameActivity">
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -27,8 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_alignParentBottom="true" />
-
-
         <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,27 +41,18 @@
             android:layout_height="81dp"
             android:layout_marginBottom="50dp"
             android:background="#FFE48EDB"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp"
             android:text="@string/new_game"/>
-
-        <Button
-            android:id="@+id/button_load"
-            android:layout_width="240dp"
-            android:layout_height="81dp"
-            android:layout_marginBottom="50dp"
-            android:background="@color/pink"
-            android:text="@string/load_game"/>
-
         <Button
             android:id="@+id/button_Achieve"
             android:layout_width="240dp"
             android:layout_height="81dp"
             android:layout_marginBottom="50dp"
             android:background="@color/pink"
-            android:text="@string/achiev"/>
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp"
+            android:text="@string/achievments"/>
     </LinearLayout>
-
-
-
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

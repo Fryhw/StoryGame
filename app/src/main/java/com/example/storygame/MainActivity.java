@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button button,b1,b2;
+    private Button button,b2;
     private boolean test = false;
 
 
@@ -59,15 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        b1 = findViewById(R.id.button_load);
         b2 = findViewById(R.id.button_Achieve);
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Save.class);
-                startActivity(intent);
-            }
-        });
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
