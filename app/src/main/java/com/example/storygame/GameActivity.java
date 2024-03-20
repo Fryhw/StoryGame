@@ -60,13 +60,14 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-        LoadData.loadSave(MainActivity.getAppContext(),"save.txt");
+        //LoadData.loadSave(MainActivity.getAppContext(),"save.txt");
 
         long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
         saveData.setChronoValue(elapsedMillis);
 
         Log.d("LOL", String.valueOf(chronometer.getBase()));
         saveData.writeFileOnInternalStorage(MainActivity.getAppContext(),"save.txt",saveData);
+
     }
 
     @Override
@@ -80,7 +81,14 @@ public class GameActivity extends AppCompatActivity {
         saveData = new SaveData();
         gridLayout = findViewById(R.id.gridLayout);
 
+
+
         chronometer = findViewById(R.id.chrono);
+        saveData = LoadData.loadSave(MainActivity.getAppContext(),"save.txt");
+        chronometer.setBase( SystemClock.elapsedRealtime() - saveData.getChronoValue());
+
+
+
         b1 = findViewById(R.id.choice1);
         b2 = findViewById(R.id.choice2);
         b3 = findViewById(R.id.choice3);

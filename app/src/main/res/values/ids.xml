@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="chapitre" type="id" />
+    <item name="swipeLayout" type="id" />
+    <item name="myScroll" type="id" />
+    <item name="button_back" type="id" />
+</resources>

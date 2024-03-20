@@ -102,7 +102,7 @@ public class SaveData implements Serializable
 
             ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(gpxfile.toPath()));
             oos.writeObject(saveData);
-            Log.d("WTF","Writing File");
+            Log.d("WTF","Writing File on" + gpxfile.toString());
 //            FileWriter writer = new FileWriter(gpxfile);
 //            writer.append(json);
 //            writer.flush();

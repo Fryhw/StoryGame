@@ -45,7 +45,7 @@ public class LoadData {
         try {
             ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(gpxfile.toPath()));
             SaveData saveData1 = (SaveData) ois.readObject();
-            Log.d("XYZ",saveData1.getName());
+            Log.d("XYZ", String.valueOf(saveData1.getChronoValue()));
             return saveData1;
         } catch (IOException e) {
             throw new RuntimeException(e);
