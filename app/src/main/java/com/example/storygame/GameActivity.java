@@ -84,19 +84,9 @@ public class GameActivity extends AppCompatActivity {
         myScrollView = (CustomScrollView) findViewById(R.id.myScroll);
         myScrollView.setEnableScrolling(false); // disable scrolling
         indication = findViewById(R.id.indication);
-
         saveData = new SaveData();
         gridLayout = findViewById(R.id.gridLayout);
-
-
-
         chronometer = findViewById(R.id.chrono);
-
-
-
-
-
-
         b1 = findViewById(R.id.choice1);
         b2 = findViewById(R.id.choice2);
         b3 = findViewById(R.id.choice3);
@@ -108,38 +98,21 @@ public class GameActivity extends AppCompatActivity {
         cT = findViewById(R.id.counterText);
         xT = findViewById(R.id.circleButton1);
         ShakeDetector shakeDetector = new ShakeDetector(this);
-
-
-
-
-
-
-        String Rules = "L'histoire doit se dérouler en 5 cgapitre, qui sont chacun lié par 4 possibilité de choix, à chaque requete tu dois continuer l'histoire en fonction du choix précedent, jusqu'à ce que ce soit le dernier chapitre";
-        String structure = "Choix 1 Choix 2 Choix 3 Choix 4";
-
-
-
-
-        String Rv = "Raconte moi une histoire intéractive en appliquant ces règles :"+Rules+"Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
-
+        String Rules = "L'histoire est suivis 4 possibilité de choix, à chaque requete tu dois continuer l'histoire en fonction du choix précedent";
+        String structure = "Texte Choix 1 Choix 2 Choix 3 Choix 4";
+        String Rv = "Raconte moi une histoire intéractive en appliquant ces règles :"+Rules+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
         if (LoadData.alreadySaved(MainActivity.getAppContext(),"save.txt")){
             saveData = LoadData.loadSave(MainActivity.getAppContext(),"save.txt");
             chronometer.setBase( SystemClock.elapsedRealtime() - saveData.getChronoValue());
             String savedScenario = saveData.getScenario();
-            String RvSave = "Affiche juste l'histoire suivante" + savedScenario + " en respectant ces règles"  + Rules + "Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
+            String RvSave = "Affiche juste l'histoire suivante" + savedScenario + " en respectant ces règles"  + Rules +"Suit la structure ="+structure;
             Rv = RvSave;
         }
-
-
-
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
-
         ChatGPTAPI.chatGPT(Rv, new ChatGPTAPI.ChatGPTListener() {
             @Override
             public void onChatGPTResponse(String response) {
-
-
                 System.out.println("Start reply " + response);
                 String response2 = response.replace("\\n", "SEP");
                 int choixIndex = response2.indexOf("SEPSEP");
@@ -193,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
                 saveData.addChoices(t1);
                 saveData.writeFileOnInternalStorage(MainActivity.getAppContext(),"save.json",saveData);
 
-                String text0 = "Ecris suite de l'hisoire interactive avec les règles :"+Rules+" pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) +"Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
+                String text0 = "Ecris suite de l'hisoire interactive avec les règles :"+Rules+" pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) +"Suit la structure ="+structure;
                 ChatGPTAPI.chatGPT(text0, new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
@@ -432,14 +405,6 @@ public class GameActivity extends AppCompatActivity {
             Log.e(TAG, "Response is null NULL");
             return;
         }
-        if (response.startsWith("Chapitre 1:")) {
-            // Supprimer "Chapitre 1" de la chaîne
-            response = response.substring("Chapitre 1:".length()).trim();
-        }
-        if (response.startsWith("Chapitre 1")) {
-            // Supprimer "Chapitre 1" de la chaîne
-            response = response.substring("Chapitre 1".length()).trim();
-        }
         String response2 = response.replace("\\n", "SEP");
 
         Log.d(TAG, "Fill all reply: " + response);
@@ -456,10 +421,12 @@ public class GameActivity extends AppCompatActivity {
         saveData.setScenario(last);
         saveData.writeFileOnInternalStorage(MainActivity.getAppContext(),"save.txt",saveData);
 
-        b1.setText(responseParts[2]);
-        b2.setText(responseParts[3]);
-        b3.setText(responseParts[4]);
-        b4.setText(responseParts[5]);
+        if (responseParts.length>=5){
+            b1.setText(responseParts[2]);
+            b2.setText(responseParts[3]);
+            b3.setText(responseParts[4]);
+            b4.setText(responseParts[5]);
+        }
 
         state++;
     }
@@ -468,18 +435,17 @@ public class GameActivity extends AppCompatActivity {
         onBackPressed(); // Cela appelle la méthode onBackPressed() par défaut
     }
     public static void setRandomBackgroundColor(RelativeLayout rlv) {
-        Random random = new Random();
-        int red = random.nextInt(256);
-        int green = random.nextInt(256);
-        int blue = random.nextInt(256);
-        int randomColor = Color.rgb(red, green, blue);
-        rlv.setBackgroundColor(randomColor);}
+        rlv.setBackgroundColor(couleur());}
 
     public static void setRandomFontColor(TextView rlv) {
+
+        rlv.setTextColor(couleur());}
+    public static int couleur(){
         Random random = new Random();
         int red = random.nextInt(256);
         int green = random.nextInt(256);
         int blue = random.nextInt(256);
         int randomColor = Color.rgb(red, green, blue);
-        rlv.setTextColor(randomColor);}
+        return randomColor;
+    }
 }

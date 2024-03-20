@@ -4,4 +4,5 @@
     <item name="swipeLayout" type="id" />
     <item name="myScroll" type="id" />
     <item name="button_back" type="id" />
+    <item name="chrono" type="id" />
 </resources>
