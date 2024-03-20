@@ -42,14 +42,15 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="100dp"
                 android:textColor="#FFE48EDB"
+                android:textSize="@dimen/text_size_large"
                 android:gravity="center"
                 android:fontFamily="@font/poppins"
-                android:textSize="40dp"
               />
         <Button
             android:id="@+id/button_New"
-            android:layout_width="240dp"
-            android:layout_height="81dp"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_width="@dimen/textview_width_large"
+            android:layout_height="@dimen/textview_height_large"
             android:layout_marginBottom="50dp"
             android:background="#FFE48EDB"
             app:strokeColor="@color/white"
@@ -57,8 +58,9 @@
             android:text="@string/new_game"/>
         <Button
             android:id="@+id/button_Achieve"
-            android:layout_width="240dp"
-            android:layout_height="81dp"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_width="@dimen/textview_width_large"
+            android:layout_height="@dimen/textview_height_large"
             android:layout_marginBottom="50dp"
             android:background="@color/pink"
             app:strokeColor="@color/white"
