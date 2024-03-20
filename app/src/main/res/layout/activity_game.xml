@@ -41,6 +41,14 @@
                     android:onClick="onBackPressed"
                     android:text="Précédent"
                     android:layout_alignParentStart="true" />
+
+                <Chronometer
+                    android:id="@+id/chrono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="3dp"
+                    android:drawableLeft="@drawable/clock_small" />
             </RelativeLayout>
 
 

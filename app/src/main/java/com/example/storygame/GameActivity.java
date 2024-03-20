@@ -100,7 +100,7 @@ public class GameActivity extends AppCompatActivity {
 
 
 
-        String Rv = "Raconte moi un histoire intéractive sous forme texte : -exemple-,puis 4 choix ";
+
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
 
@@ -157,7 +157,7 @@ public class GameActivity extends AppCompatActivity {
                 String t1 = b1.getText().toString();
                 saveData.addChoices(t1);
                 saveData.writeFileOnInternalStorage(MainActivity.getAppContext(),"save.json",saveData);
-                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
+
                 String text0 = "Ecris suite de l'hisoire interactive avec les règles :"+Rules+" pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) +"Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
                 ChatGPTAPI.chatGPT(text0, new ChatGPTAPI.ChatGPTListener() {
                     @Override
