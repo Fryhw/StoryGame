@@ -379,24 +379,6 @@ public class GameActivity extends AppCompatActivity {
         state++;
     }
 
-        private String finish(String texte,String choix) {
-        String text0 = "Ecris la fin de l'histoire,  pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + choix+ "termine cette histoire sans donner de nouveaux choix";
-        ChatGPTAPI.chatGPT(text0, new ChatGPTAPI.ChatGPTListener() {
-            @Override
-            public void onChatGPTResponse(String response) {
-                TextView textView = findViewById(R.id.Text_game);
-
-                chap.setText("Chapitre " + state);
-                b1.setVisibility(View.GONE);
-                b2.setVisibility(View.GONE);
-                b3.setVisibility(View.GONE);
-                b4.setVisibility(View.GONE);
-                fillAll(response, b1, b2, b3, b4, textView);
-
-            }
-        });
-    }
-
     public void onBackPressed(View view) {
         onBackPressed(); // Cela appelle la méthode onBackPressed() par défaut
     }
