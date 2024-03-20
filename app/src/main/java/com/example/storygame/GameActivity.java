@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
         xT = findViewById(R.id.circleButton1);
         ShakeDetector shakeDetector = new ShakeDetector(this);
         String Rules = "L'histoire doit se dérouler en 5 cgapitre, qui sont chacun lié par 4 possibilité de choix, à chaque requete tu dois continuer l'histoire en fonction du choix précedent, jusqu'à ce que ce soit le dernier chapitre";
-        String structure = "Texte Choix 1 Choix 2 Choix 3 Choix 4";
+        String structure = "Choix 1 Choix 2 Choix 3 Choix 4";
         String Rv = "Raconte moi une histoire intéractive en appliquant ces règles :"+Rules+"Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
 
 
@@ -110,7 +110,7 @@ public class GameActivity extends AppCompatActivity {
                 cT.setVisibility(View.VISIBLE);
                 xT.setVisibility(View.VISIBLE);
                 updateCounterText();
-                int temp = 11-counter;
+                int temp = 10-counter;
                 indication.setText("clique "+temp+" fois pour chargé les choix");
 
 
