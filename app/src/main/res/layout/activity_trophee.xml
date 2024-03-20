@@ -6,29 +6,33 @@
     tools:context=".Trophee"
     tools:ignore="MergeRootFrame">
 
-    <TextView
-        android:id="@+id/game_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="@string/impossible_game"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/game_title"
-        android:layout_centerHorizontal="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retry"
+            tools:layout_editor_absoluteX="162dp"
+            tools:layout_editor_absoluteY="342dp" />
 
-    <Button
-        android:id="@+id/retry_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Retry" />
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:layout_editor_absoluteX="206dp" />
+
+        <TextView
+            android:id="@+id/game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/impossible_game"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:layout_editor_absoluteX="179dp"
+            tools:layout_editor_absoluteY="50dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

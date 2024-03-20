@@ -116,6 +116,27 @@ public class SaveData implements Serializable
         }
     }
 
+    public static void deleteSave(Context mcoContext, String sFileName){
+        File dir = new File(mcoContext.getFilesDir(), "mydir");
+        File gpxfile = new File(dir, sFileName);
+
+
+        if (LoadData.alreadySaved(mcoContext,gpxfile.toString())){
+
+            boolean deletionStatus = gpxfile.delete();
+
+            if (deletionStatus) {
+                Log.d("DELETUS","File deleted successfully.");
+            } else {
+                Log.d("DELETUS","Failed to delete the file.");
+            }
+        } else {
+            Log.d("DELETUS","File does not exist.");
+        }
+
+
+    }
+
 
     public long getChronoValue() {
         return chronoValue;
