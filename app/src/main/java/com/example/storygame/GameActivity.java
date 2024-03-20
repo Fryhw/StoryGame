@@ -111,11 +111,15 @@ public class GameActivity extends AppCompatActivity {
 
 
 
+        chronometer.setBase(SystemClock.elapsedRealtime());
+
+
+
 
 
 
         String Rules = "L'histoire doit se dérouler en 5 cgapitre, qui sont chacun lié par 4 possibilité de choix, à chaque requete tu dois continuer l'histoire en fonction du choix précedent, jusqu'à ce que ce soit le dernier chapitre";
-        String structure = "Choix 1 Choix 2 Choix 3 Choix 4";
+        String structure = "Texte Choix 1 Choix 2 Choix 3 Choix 4";
 
 
 
@@ -127,12 +131,13 @@ public class GameActivity extends AppCompatActivity {
             chronometer.setBase( SystemClock.elapsedRealtime() - saveData.getChronoValue());
             String savedScenario = saveData.getScenario();
             String RvSave = "Affiche juste l'histoire suivante" + savedScenario + " en respectant ces règles"  + Rules + "Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
+
             Rv = RvSave;
         }
 
 
 
-        chronometer.setBase(SystemClock.elapsedRealtime());
+
         chronometer.start();
 
         ChatGPTAPI.chatGPT(Rv, new ChatGPTAPI.ChatGPTListener() {
