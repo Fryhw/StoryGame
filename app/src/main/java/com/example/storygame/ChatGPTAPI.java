@@ -32,7 +32,7 @@ public class ChatGPTAPI {
     public static String performChatGPTRequest(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
         String apiKey = "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";
-        String model = "gpt-3.5-turbo";
+        String model = "gpt-3.5-turbo-0125";
 
         try {
             URL obj = new URL(url);
@@ -64,7 +64,7 @@ public class ChatGPTAPI {
         } catch (IOException e) {
             error++;
             e.printStackTrace();
-            if (error<5){
+            if (error<3){
                 return performChatGPTRequest(prompt);}
             else {
                 return null;

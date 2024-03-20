@@ -1,4 +1,7 @@
 package com.example.storygame;
+import static android.view.View.GONE;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -6,6 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +29,7 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -33,11 +38,12 @@ public class GameActivity extends AppCompatActivity {
     private Button b1, b2, b3, b4;
     private Button xT;
     private GridLayout gridLayout, cG;
-    private TextView swipeView, cT;
+    private TextView indication, cT;
     private int counter = 0;
     private boolean test = false;
     private String last = "";
     private LinearLayout swipe ;
+    private CustomScrollView myScrollView;
 
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
@@ -53,16 +59,15 @@ public class GameActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        CustomScrollView myScrollView = (CustomScrollView) findViewById(R.id.myScroll);
+        myScrollView = (CustomScrollView) findViewById(R.id.myScroll);
         myScrollView.setEnableScrolling(false); // disable scrolling
-
+        indication = findViewById(R.id.indication);
         gridLayout = findViewById(R.id.gridLayout);
         b1 = findViewById(R.id.choice1);
         b2 = findViewById(R.id.choice2);
         b3 = findViewById(R.id.choice3);
         b4 = findViewById(R.id.choice4);
         swipe  = findViewById(R.id.swipeLayout);
-        swipeView = findViewById(R.id.swipeView);
         TextView chap = findViewById(R.id.chapitre);
         TextView textView = findViewById(R.id.Text_game);
         cG = findViewById(R.id.counterGrid);
@@ -93,31 +98,35 @@ public class GameActivity extends AppCompatActivity {
         swipe.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
-                cG.setVisibility(View.GONE);
-                cT.setVisibility(View.GONE);
-                xT.setVisibility(View.GONE);
+                setRandomFontColor(textView);
             }
 
             public void onSwipeRight() {
+                textView.setTextColor(Color.WHITE);
+            }
+
+            public void onSwipeTop() {
                 cG.setVisibility(View.VISIBLE);
                 cT.setVisibility(View.VISIBLE);
                 xT.setVisibility(View.VISIBLE);
                 updateCounterText();
-            }
+                int temp = 11-counter;
+                indication.setText("clique "+temp+" fois pour chargé les choix");
 
-            public void onSwipeTop() {
-                gridLayout.setVisibility(View.VISIBLE);
-                myScrollView.setEnableScrolling(true);
+
             }
 
             public void onSwipeBottom() {
-
+                cG.setVisibility(GONE);
+                cT.setVisibility(GONE);
+                xT.setVisibility(GONE);
+                indication.setText("swipe vers le haut pour afficher la zone de clique");
             }
         });
         shakeDetector.setOnShakeListener(() -> {
-            System.out.println("BOUMMM");
-        });
-
+            RelativeLayout rl = findViewById(R.id.relativeLayout);
+            setRandomBackgroundColor(rl);
+            });
 
         b1 = findViewById(R.id.choice1);
         b1.setOnClickListener(new View.OnClickListener() {
@@ -234,12 +243,26 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void incrementCounter(View view) {
+
         counter++;
+        int temp = 11-counter;
+        indication.setText("clique "+temp+" fois pour chargé les choix");
         updateCounterText();
     }
 
     private void updateCounterText() {
-        cT.setText(String.valueOf(counter));
+        if (counter > 9){
+            cG.setVisibility(GONE);
+            cT.setVisibility(GONE);
+            xT.setVisibility(GONE);
+            gridLayout.setVisibility(View.VISIBLE);
+            myScrollView.setEnableScrolling(true);
+            indication.setVisibility(GONE);
+        }
+        else{
+            cT.setText(String.valueOf(counter));
+        }
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -345,6 +368,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void fillAll(String response, Button b1, Button b2, Button b3, Button b4, TextView tv) {
+        System.out.println("RRRRRRRRRRRR"+response);
         if (response == null || response.isEmpty()) {
             Log.e(TAG, "Response is null NULL");
             return;
@@ -382,5 +406,19 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed(View view) {
         onBackPressed(); // Cela appelle la méthode onBackPressed() par défaut
     }
+    public static void setRandomBackgroundColor(RelativeLayout rlv) {
+        Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+        int randomColor = Color.rgb(red, green, blue);
+        rlv.setBackgroundColor(randomColor);}
 
+    public static void setRandomFontColor(TextView rlv) {
+        Random random = new Random();
+        int red = random.nextInt(256);
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+        int randomColor = Color.rgb(red, green, blue);
+        rlv.setTextColor(randomColor);}
 }
