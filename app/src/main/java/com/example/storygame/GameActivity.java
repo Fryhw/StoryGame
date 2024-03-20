@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class GameActivity extends AppCompatActivity {
-
+    private static int state = 1;
     private Button b1, b2, b3, b4;
     private Button xT;
     private GridLayout gridLayout, cG;
@@ -35,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
     private int counter = 0;
     private boolean test = false;
     private String last = "";
+    private LinearLayout swipe ;
 
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
@@ -50,44 +53,52 @@ public class GameActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        CustomScrollView myScrollView = (CustomScrollView) findViewById(R.id.myScroll);
+        myScrollView.setEnableScrolling(false); // disable scrolling
+
         gridLayout = findViewById(R.id.gridLayout);
         b1 = findViewById(R.id.choice1);
         b2 = findViewById(R.id.choice2);
         b3 = findViewById(R.id.choice3);
         b4 = findViewById(R.id.choice4);
+        swipe  = findViewById(R.id.swipeLayout);
         swipeView = findViewById(R.id.swipeView);
+        TextView chap = findViewById(R.id.chapitre);
+        TextView textView = findViewById(R.id.Text_game);
         cG = findViewById(R.id.counterGrid);
         cT = findViewById(R.id.counterText);
         xT = findViewById(R.id.circleButton1);
         ShakeDetector shakeDetector = new ShakeDetector(this);
+        String Rules = "L'histoire doit se dérouler en 5 cgapitre, qui sont chacun lié par 4 possibilité de choix, à chaque requete tu dois continuer l'histoire en fonction du choix précedent, jusqu'à ce que ce soit le dernier chapitre";
+        String structure = "Texte Choix 1 Choix 2 Choix 3 Choix 4";
+        String Rv = "Raconte moi une histoire intéractive en appliquant ces règles :"+Rules+"Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
 
-        String Rv = "Raconte moi un histoire intéractive sous forme texte : -exemple-,puis 4 choix ";
+
         ChatGPTAPI.chatGPT(Rv, new ChatGPTAPI.ChatGPTListener() {
             @Override
             public void onChatGPTResponse(String response) {
 
-                TextView textView = findViewById(R.id.Text_game);
+
                 System.out.println("Start reply " + response);
                 String response2 = response.replace("\\n", "SEP");
                 int choixIndex = response2.indexOf("SEPSEP");
                 String texte = response2.substring(0, choixIndex).trim();
                 last += "suite =" + texte;
                 textView.setText(texte);
+                chap.setText("Chapitre "+state);
                 fillAll(response2, b1, b2, b3, b4, textView);
-                gridLayout.setVisibility(View.GONE);
-                swipeView.setVisibility(View.VISIBLE);
             }
         });
 
-        swipeView.setOnTouchListener(new OnSwipeTouchListener(this) {
+        swipe.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
-                gridLayout.setVisibility(View.VISIBLE);
-                swipeView.setVisibility(View.GONE);
+                cG.setVisibility(View.GONE);
+                cT.setVisibility(View.GONE);
+                xT.setVisibility(View.GONE);
             }
 
             public void onSwipeRight() {
-                swipeView.setVisibility(View.GONE);
                 cG.setVisibility(View.VISIBLE);
                 cT.setVisibility(View.VISIBLE);
                 xT.setVisibility(View.VISIBLE);
@@ -95,7 +106,8 @@ public class GameActivity extends AppCompatActivity {
             }
 
             public void onSwipeTop() {
-
+                gridLayout.setVisibility(View.VISIBLE);
+                myScrollView.setEnableScrolling(true);
             }
 
             public void onSwipeBottom() {
@@ -113,10 +125,13 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t1 = b1.getText().toString();
-                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
+                String text0 = "Ecris suite de l'hisoire interactive avec les règles :"+Rules+" pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) +"Pour information tu es au Chapitre ="+state+"Mais il ne faut pas l'écrire"+"Suit la structure ="+structure;
+                ChatGPTAPI.chatGPT(text0, new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
+
+                        chap.setText("Chapitre "+state);
                         fillAll(response, b1, b2, b3, b4, textView);
 
                     }
@@ -132,6 +147,8 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
+
+                        chap.setText("Chapitre "+state);
                         fillAll(response, b1, b2, b3, b4, textView);
 
                     }
@@ -146,10 +163,11 @@ public class GameActivity extends AppCompatActivity {
                 ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t3.substring(3, t3.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
-                        TextView textView = findViewById(R.id.Text_game);
-                        fillAll(response, b1, b2, b3, b4, textView);
+                            TextView textView = findViewById(R.id.Text_game);
+                            chap.setText("Chapitre "+state);
+                            fillAll(response, b1, b2, b3, b4, textView);
 
-                    }
+                        }
                 });
             }
         });
@@ -162,6 +180,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
+                        chap.setText("Chapitre "+state);
                         fillAll(response, b1, b2, b3, b4, textView);
 
                     }
@@ -326,23 +345,60 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void fillAll(String response, Button b1, Button b2, Button b3, Button b4, TextView tv) {
-        System.out.println("Fill all rreply " + response);
+        if (response == null || response.isEmpty()) {
+            Log.e(TAG, "Response is null NULL");
+            return;
+        }
+        if (response.startsWith("Chapitre 1:")) {
+            // Supprimer "Chapitre 1" de la chaîne
+            response = response.substring("Chapitre 1:".length()).trim();
+        }
+        if (response.startsWith("Chapitre 1")) {
+            // Supprimer "Chapitre 1" de la chaîne
+            response = response.substring("Chapitre 1".length()).trim();
+        }
         String response2 = response.replace("\\n", "SEP");
-        int choixIndex = response2.indexOf("SEPSEP");
-        String texte = response2.substring(0, choixIndex).trim();
 
-            String temp = response2.replace(texte, "");
-            last += "suite =" + texte;
-            String[] choixArray = temp.split("SEP");
-            tv.setText(texte);
+        Log.d(TAG, "Fill all reply: " + response);
 
-                if (choixArray.length>4) {
-                        b1.setText(choixArray[2]);
-                        b2.setText(choixArray[3]);
-                        b3.setText(choixArray[4]);
-                        b4.setText(choixArray[5]);
-                }
+        String[] responseParts = response2.split("SEP");
+        if (responseParts.length < 4) {
+            Log.e(TAG, "Response isn't good");
+            return;
+        }
+
+        String texte = responseParts[0].trim()+responseParts[1].trim();
+        tv.setText(texte);
+        last = texte;
+
+        b1.setText(responseParts[2]);
+        b2.setText(responseParts[3]);
+        b3.setText(responseParts[4]);
+        b4.setText(responseParts[5]);
+
+        state++;
     }
 
+        private String finish(String texte,String choix) {
+        String text0 = "Ecris la fin de l'histoire,  pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + choix+ "termine cette histoire sans donner de nouveaux choix";
+        ChatGPTAPI.chatGPT(text0, new ChatGPTAPI.ChatGPTListener() {
+            @Override
+            public void onChatGPTResponse(String response) {
+                TextView textView = findViewById(R.id.Text_game);
+
+                chap.setText("Chapitre " + state);
+                b1.setVisibility(View.GONE);
+                b2.setVisibility(View.GONE);
+                b3.setVisibility(View.GONE);
+                b4.setVisibility(View.GONE);
+                fillAll(response, b1, b2, b3, b4, textView);
+
+            }
+        });
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed(); // Cela appelle la méthode onBackPressed() par défaut
+    }
 
 }

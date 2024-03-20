@@ -4,13 +4,13 @@
     <string name="load_game">Load game</string>
     <string name="achiev">achievements</string>
     <string name="Test"></string>
-    <string name="choice1">Raconte moi un histoire intéractive puis écrit 4 choix qui nous permettrons de continuer histoire sous forme -> texte, CHOIX ¤1¤ CHOIX ¤2¤ CHOIX ¤3¤ CHOIX ¤4¤ </string>
-    <string name="choice2">Ecrit moi une chanson</string>
-    <string name="choice3">Fait moi un dessin en ascii</string>
-    <string name="choice4">Parle en binnaire</string>
-
-    <string name="Text_game">Chargement </string>
+    <string name="choice1">Choix 1 </string>
+    <string name="choice2">Choix 2</string>
+    <string name="choice3">Choix 3</string>
+    <string name="choice4">Choix 4</string>
+    <string name="Text_game"></string>
     <string name="impossible_game">TEST</string>
+    <string name="Chapitre">Chargement</string>
 
     <string name="fill">Raconte moi un histoire intéractive puis écrit 4 choix qui nous permettrons de continuer histoire sous forme -> texte, CHOIX ¤1¤ CHOIX ¤2¤ CHOIX ¤3¤ CHOIX ¤4¤  </string>
     <!--

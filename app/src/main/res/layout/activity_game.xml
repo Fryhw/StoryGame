@@ -12,57 +12,83 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:textColor="@color/white"
-        android:background="@color/gray"
+        android:background="@color/blue"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="NotSibling">
-        <FrameLayout
-            android:id="@+id/ad_view_container2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true" />
-        <FrameLayout
-            android:id="@+id/ad_view_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentBottom="true"
-            app:layout_constraintTop_toBottomOf="@id/ad_view_container2"
-            />
-
 
         <!-- Carré contenant le texte -->
         <LinearLayout
+            android:id="@+id/swipeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
             <FrameLayout
+                android:id="@+id/ad_view_container2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left">
+                <Button
+                    android:id="@+id/button_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onBackPressed"
+                    android:text="Précédent"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/chapitre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Chapitre"
+                android:gravity="center"
+                android:textSize="20sp"
+                />
+
+            <FrameLayout
                 android:id="@+id/textContainer"
-                android:layout_width="300dp"
+                android:layout_width="380dp"
                 android:layout_height="300dp"
                 android:layout_weight="1"
                 >
 
-                <TextView
-                    android:id="@+id/Text_game"
+                <com.example.storygame.CustomScrollView
+                    android:id="@+id/myScroll"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/Text_game"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:layout_weight="1"
-                    />
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/Text_game"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/Text_game"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:maxLines="10"
+                        android:maxWidth="380dp"
+                        android:scrollbars="vertical"
+                        />
+                </com.example.storygame.CustomScrollView>
+
             </FrameLayout>
+
             <GridLayout
-                android:visibility="gone"
                 android:id="@+id/gridLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:layout_gravity="bottom">
+                android:columnCount="1"
+                android:layout_gravity="bottom"
+                android:visibility="gone">
 
                 <!-- Boutons pour les choix -->
                 <Button
@@ -143,7 +169,14 @@ swipe à droit pour le point qui se clique, secoue pour un message en log d" />
                 android:background="@drawable/circle_button"
                 android:onClick="incrementCounter"
                 android:layout_columnWeight="1" />
-
+            <FrameLayout
+                android:id="@+id/ad_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                />
         </LinearLayout>
     </RelativeLayout>
 

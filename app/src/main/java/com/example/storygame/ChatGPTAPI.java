@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ChatGPTAPI {
+    public static int error=0;
 
     public interface ChatGPTListener {
         void onChatGPTResponse(String response);
@@ -61,8 +62,13 @@ public class ChatGPTAPI {
             // Extract the message from the JSON response
             return extractMessageFromJSONResponse(response.toString());
         } catch (IOException e) {
+            error++;
             e.printStackTrace();
-            return null;
+            if (error<5){
+                return performChatGPTRequest(prompt);}
+            else {
+                return null;
+            }
         }
     }
 
