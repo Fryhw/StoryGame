@@ -1,16 +1,13 @@
 package com.example.storygame;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.storygame.model.SaveData;
 import com.google.android.gms.ads.AdView;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -31,29 +28,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameActivity extends AppCompatActivity {
 
-
-
-    private SaveData saveData;
-
-    private Button b1,xT, b2,b3,b4;
-    private GridLayout gridLayout,cG;
-    private TextView swipeView,cT;
+    private Button b1, b2, b3, b4;
+    private Button xT;
+    private GridLayout gridLayout, cG;
+    private TextView swipeView, cT;
     private int counter = 0;
     private boolean test = false;
-    private String last ="";
+    private String last = "";
 
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
     private final AtomicBoolean isMobileAdsInitializeCalled = new AtomicBoolean(false);
     private GoogleMobileAdsConsentManager googleMobileAdsConsentManager;
     private AdView adView;
-    private FrameLayout adContainerView,adContainerView2;
+    private FrameLayout adContainerView, adContainerView2;
     private AtomicBoolean initialLayoutComplete = new AtomicBoolean(false);
-
-
-
-    private Chronometer chronometer;
-
 
 
     @Override
@@ -61,27 +50,6 @@ public class GameActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        chronometer = new Chronometer(getApplicationContext());
-        TextView tchrono = findViewById(R.id.chrono);
-
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long time = SystemClock.elapsedRealtime() - chronometer.getBase();
-                int h   = (int)(time /3600000);
-                int m = (int)(time - h*3600000)/60000;
-                int s= (int)(time - h*3600000- m*60000)/1000 ;
-                String t = (h < 10 ? "0"+h: h)+":"+(m < 10 ? "0"+m: m)+":"+ (s < 10 ? "0"+s: s);
-                tchrono.setText(t);
-            }
-        });
-        chronometer.start();
-
-
-
-
-        saveData = new SaveData();
         gridLayout = findViewById(R.id.gridLayout);
         b1 = findViewById(R.id.choice1);
         b2 = findViewById(R.id.choice2);
@@ -99,13 +67,13 @@ public class GameActivity extends AppCompatActivity {
             public void onChatGPTResponse(String response) {
 
                 TextView textView = findViewById(R.id.Text_game);
-                System.out.println(response);
-                String response2 =response.replace("\\n","SEP");
+                System.out.println("Start reply " + response);
+                String response2 = response.replace("\\n", "SEP");
                 int choixIndex = response2.indexOf("SEPSEP");
                 String texte = response2.substring(0, choixIndex).trim();
-                last+= "suite ="+texte;
+                last += "suite =" + texte;
                 textView.setText(texte);
-                fillAll(response2,b1,b2,b3,b4);
+                fillAll(response2, b1, b2, b3, b4, textView);
                 gridLayout.setVisibility(View.GONE);
                 swipeView.setVisibility(View.VISIBLE);
             }
@@ -117,17 +85,20 @@ public class GameActivity extends AppCompatActivity {
                 gridLayout.setVisibility(View.VISIBLE);
                 swipeView.setVisibility(View.GONE);
             }
-            public void onSwipeRight(){
+
+            public void onSwipeRight() {
                 swipeView.setVisibility(View.GONE);
                 cG.setVisibility(View.VISIBLE);
                 cT.setVisibility(View.VISIBLE);
                 xT.setVisibility(View.VISIBLE);
                 updateCounterText();
             }
-            public void onSwipeTop(){
+
+            public void onSwipeTop() {
 
             }
-            public void onSwipeBottom(){
+
+            public void onSwipeBottom() {
 
             }
         });
@@ -142,19 +113,11 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t1 = b1.getText().toString();
-                saveData.addChoices(t1);
-                saveData.writeFileOnInternalStorage(MainActivity.getAppContext(),"save.txt",t1);
-                Log.d("WTF","WTFFF");
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t1, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        String response2 =response.replace("\\n","SEP");
-                        fillAll(response,b1,b2,b3,b4);
-                        textView.setText(response);
-
-
-
+                        fillAll(response, b1, b2, b3, b4, textView);
 
                     }
                 });
@@ -165,13 +128,11 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t4 = b4.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t4, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT(" Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t4.substring(3, t4.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
-                        textView.setText(response);
+                        fillAll(response, b1, b2, b3, b4, textView);
 
                     }
                 });
@@ -182,13 +143,11 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t3 = b3.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t3, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t3.substring(3, t3.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
-                        textView.setText(response);
+                        fillAll(response, b1, b2, b3, b4, textView);
 
                     }
                 });
@@ -199,13 +158,11 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t2 = b2.getText().toString();
-                ChatGPTAPI.chatGPT("Pour rappel"+last+", maintenant on en est là"+TextFill+" et j'ai fait ce choix" +t2, new ChatGPTAPI.ChatGPTListener() {
+                ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t2.substring(3, t2.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
                         TextView textView = findViewById(R.id.Text_game);
-                        //int choixIndex = response.indexOf("\n\n");
-                        //String texte = response.substring(0, choixIndex).trim();
-                        textView.setText(response);
+                        fillAll(response, b1, b2, b3, b4, textView);
 
                     }
                 });
@@ -256,6 +213,7 @@ public class GameActivity extends AppCompatActivity {
         MobileAds.setRequestConfiguration(
                 new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345")).build());
     }
+
     public void incrementCounter(View view) {
         counter++;
         updateCounterText();
@@ -265,37 +223,38 @@ public class GameActivity extends AppCompatActivity {
         cT.setText(String.valueOf(counter));
     }
 
-public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_menu, menu);
         MenuItem moreMenu = menu.findItem(R.id.action_more);
         moreMenu.setVisible(googleMobileAdsConsentManager.isPrivacyOptionsRequired());
         return true;
-        }
-public boolean onOptionsItemSelected(MenuItem item) {
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
         View menuItemView = findViewById(item.getItemId());
         PopupMenu popup = new PopupMenu(this, menuItemView);
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
         popup.show();
         popup.setOnMenuItemClickListener(
-        popupMenuItem -> {
-        if (popupMenuItem.getItemId() == R.id.privacy_settings) {
-        // Handle changes to user consent.
-        googleMobileAdsConsentManager.showPrivacyOptionsForm(
-        this,
-        formError -> {
-        if (formError != null) {
-        Toast.makeText(this, formError.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        });
-        return true;
-        }
-        return false;
-        });
+                popupMenuItem -> {
+                    if (popupMenuItem.getItemId() == R.id.privacy_settings) {
+                        // Handle changes to user consent.
+                        googleMobileAdsConsentManager.showPrivacyOptionsForm(
+                                this,
+                                formError -> {
+                                    if (formError != null) {
+                                        Toast.makeText(this, formError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        return true;
+                    }
+                    return false;
+                });
         return super.onOptionsItemSelected(item);
-        }
+    }
 
 
-private void loadBanner() {
+    private void loadBanner() {
         // Create a new ad view.
         AdView adView1 = new AdView(this);
         adView1.setAdUnitId(AD_UNIT_ID);
@@ -320,64 +279,70 @@ private void loadBanner() {
 
         AdRequest adRequest2 = new AdRequest.Builder().build();
         adView2.loadAd(adRequest2);
-        }
+    }
 
-private void initializeMobileAdsSdk() {
+    private void initializeMobileAdsSdk() {
         if (isMobileAdsInitializeCalled.getAndSet(true)) {
-        return;
+            return;
         }
 
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(
-        this,
-        new OnInitializationCompleteListener() {
-public void onInitializationComplete(InitializationStatus initializationStatus) {}
-        });
+                this,
+                new OnInitializationCompleteListener() {
+                    public void onInitializationComplete(InitializationStatus initializationStatus) {
+                    }
+                });
 
         // Load an ad.
         if (initialLayoutComplete.get()) {
-        loadBanner();
+            loadBanner();
         }
-        }
+    }
 
-private AdSize getAdSize() {
+    private AdSize getAdSize() {
         // Determine the screen width (less decorations) to use for the ad width.
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
         float density = outMetrics.density;
-        float adWidthPixels=0;
-        if (test != true){
-        adWidthPixels = adContainerView.getWidth();
-        test = true;
-        }
-        else {
-        adWidthPixels = adContainerView2.getWidth();
+        float adWidthPixels = 0;
+        if (test != true) {
+            adWidthPixels = adContainerView.getWidth();
+            test = true;
+        } else {
+            adWidthPixels = adContainerView2.getWidth();
         }
 
 
         // If the ad hasn't been laid out, default to the full screen width.
         if (adWidthPixels == 0) {
-        adWidthPixels = outMetrics.widthPixels;
+            adWidthPixels = outMetrics.widthPixels;
         }
 
         int adWidth = (int) (adWidthPixels / density);
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
-        }
-        public static void fillAll(String response,Button b1, Button b2, Button b3, Button b4){
-            System.out.println(response);
-            int choixIndex = response.indexOf("SEPSEP");
-            String texte = response.substring(0, choixIndex).trim();
-            String temp = response.replace(texte,"");
+    }
+
+    public void fillAll(String response, Button b1, Button b2, Button b3, Button b4, TextView tv) {
+        System.out.println("Fill all rreply " + response);
+        String response2 = response.replace("\\n", "SEP");
+        int choixIndex = response2.indexOf("SEPSEP");
+        String texte = response2.substring(0, choixIndex).trim();
+
+            String temp = response2.replace(texte, "");
+            last += "suite =" + texte;
             String[] choixArray = temp.split("SEP");
-            if (choixArray.length>2){
-                b1.setText(choixArray[2]);
-                b2.setText(choixArray[3]);
-                b3.setText(choixArray[4]);
-                b4.setText(choixArray[5]);
-            }
-        }
+            tv.setText(texte);
+
+                if (choixArray.length>4) {
+                        b1.setText(choixArray[2]);
+                        b2.setText(choixArray[3]);
+                        b3.setText(choixArray[4]);
+                        b4.setText(choixArray[5]);
+                }
+    }
 
 
 }
