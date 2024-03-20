@@ -1,8 +1,10 @@
 package com.example.storygame;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -49,11 +51,34 @@ public class GameActivity extends AppCompatActivity {
     private AtomicBoolean initialLayoutComplete = new AtomicBoolean(false);
 
 
+
+    private Chronometer chronometer;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        chronometer = new Chronometer(getApplicationContext());
+        TextView tchrono = findViewById(R.id.chrono);
+
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                long time = SystemClock.elapsedRealtime() - chronometer.getBase();
+                int h   = (int)(time /3600000);
+                int m = (int)(time - h*3600000)/60000;
+                int s= (int)(time - h*3600000- m*60000)/1000 ;
+                String t = (h < 10 ? "0"+h: h)+":"+(m < 10 ? "0"+m: m)+":"+ (s < 10 ? "0"+s: s);
+                tchrono.setText(t);
+            }
+        });
+        chronometer.start();
+
+
 
 
         saveData = new SaveData();
@@ -353,4 +378,6 @@ private AdSize getAdSize() {
                 b4.setText(choixArray[5]);
             }
         }
+
+
 }
