@@ -8,6 +8,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.storygame.model.SaveData;
 import com.google.android.gms.ads.AdView;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -36,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     private boolean test = false;
     private String last = "";
 
+    private SaveData saveData;
+
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9214589741";
     private static final String TAG = "MyActivity";
     private final AtomicBoolean isMobileAdsInitializeCalled = new AtomicBoolean(false);
@@ -50,6 +53,7 @@ public class GameActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        saveData = new SaveData();
         gridLayout = findViewById(R.id.gridLayout);
         b1 = findViewById(R.id.choice1);
         b2 = findViewById(R.id.choice2);
@@ -113,6 +117,8 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String TextFill = findViewById(R.id.Text_game).toString();
                 String t1 = b1.getText().toString();
+                saveData.addChoices(t1);
+                saveData.writeFileOnInternalStorage(MainActivity.getAppContext(),"save.txt",t1);
                 ChatGPTAPI.chatGPT("Raconte moi la suite de l'hisoire : pour rappel" + last + ", maintenant on en est là" + TextFill + " et j'ai fait ce choix" + t1.substring(3, t1.length() - 1) + " raconte moi ce qu'il se passe,sous forme texte : -exemple-,puis 4 choix", new ChatGPTAPI.ChatGPTListener() {
                     @Override
                     public void onChatGPTResponse(String response) {
