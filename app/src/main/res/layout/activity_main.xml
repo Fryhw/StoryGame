@@ -35,6 +35,17 @@
         android:textColor="@color/white"
         tools:ignore="UselessParent">
 
+            <TextView
+                android:id="@+id/game_title"
+                android:text="@string/app_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="100dp"
+                android:textColor="#FFE48EDB"
+                android:gravity="center"
+                android:fontFamily="@font/poppins"
+                android:textSize="40dp"
+              />
         <Button
             android:id="@+id/button_New"
             android:layout_width="240dp"
