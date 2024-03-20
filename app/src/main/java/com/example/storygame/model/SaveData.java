@@ -25,6 +25,8 @@ public class SaveData implements Serializable
     private ArrayList<String> choices;
     private String name;
 
+    private String scenario;
+
     private long chronoValue;
 
     private DateFormat lastPlayed;
@@ -34,6 +36,7 @@ public class SaveData implements Serializable
         this.name = name;
         this.lastPlayed = lastPlayed;
         chronoValue = 0;
+        scenario = "";
     }
 
     public SaveData() {
@@ -120,5 +123,13 @@ public class SaveData implements Serializable
 
     public void setChronoValue(long chronoValue) {
         this.chronoValue = chronoValue;
+    }
+
+    public String getScenario() {
+        return scenario;
+    }
+
+    public void setScenario(String scenario) {
+        this.scenario = scenario;
     }
 }

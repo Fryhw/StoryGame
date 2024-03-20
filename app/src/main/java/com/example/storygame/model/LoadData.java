@@ -46,6 +46,7 @@ public class LoadData {
             ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(gpxfile.toPath()));
             SaveData saveData1 = (SaveData) ois.readObject();
             Log.d("XYZ", String.valueOf(saveData1.getChronoValue()));
+            Log.d("XYZ",saveData1.getScenario());
             return saveData1;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -54,6 +55,17 @@ public class LoadData {
         }
 
 
+    }
+
+    public static boolean alreadySaved(Context context, String filepath){
+        File dir = new File(context.getFilesDir(), "mydir");
+
+
+        File file = new File(dir, filepath);
+        if(file.exists() && !file.isDirectory()) {
+            return true;
+        }
+        return false;
     }
 
 
