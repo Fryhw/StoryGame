@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Story Game</string>
-    <string name="new_game">New game</string>
-    <string name="achievments">achievements</string>
+    <string name="new_game">Play</string>
+    <string name="achievments">Achievements</string>
     <string name="Test"></string>
     <string name="choice1">Choix 1 </string>
     <string name="choice2">Choix 2</string>
