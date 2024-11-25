@@ -30,8 +30,8 @@ public class ChatGPTAPI {
 
     private static String performChatGPTRequest(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
-        String apiKey = "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";
-        String model = "gpt-3.5-turbo";
+        String apiKey = "TODO";// Add your OpenAI Key here
+        String model = "gpt-3.5-turbo";// Or the model of GPT you prefer
 
         try {
             URL obj = new URL(url);
